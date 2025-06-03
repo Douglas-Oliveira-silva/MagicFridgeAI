@@ -4,26 +4,23 @@ import dev.java10x.MagicFridgeAI.dto.FoodDTO;
 import dev.java10x.MagicFridgeAI.mapper.FoodMapper;
 import dev.java10x.MagicFridgeAI.model.FoodItem;
 import dev.java10x.MagicFridgeAI.repository.FoodItemRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class FooditemService {
 
     private FoodItemRepository repository;
     private FoodMapper foodMapper;
 
-
-    public FooditemService(FoodMapper foodMapper) {
-        this.foodMapper = foodMapper;
+    public FooditemService(FoodItemRepository repository, FoodMapper foodMapper) {
+        this.repository = repository;
+        this.foodMapper = foodMapper
     }
-
-    public FooditemService(FoodItemRepository service) {
-        this.repository = service;
-    }
-
-    // 1. CRIAR NOVA COMIDA
+// 1. CRIAR NOVA COMIDA
 
     /*
     Sem usar DTO ficaria assim:
@@ -63,7 +60,7 @@ public class FooditemService {
     }
 
     // 5 .DELETAR
-    public void deletarComidaporId(Long id){
+    public void deletarComidaPorId(Long id){
         repository.deleteById(id);
     }
 
