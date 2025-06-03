@@ -2,8 +2,6 @@ package dev.java10x.MagicFridgeAI.controller;
 
 
 import dev.java10x.MagicFridgeAI.dto.FoodDTO;
-import dev.java10x.MagicFridgeAI.model.FoodItem;
-import dev.java10x.MagicFridgeAI.repository.FoodItemRepository;
 import dev.java10x.MagicFridgeAI.service.FooditemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,12 +10,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 @RequestMapping("/food")
@@ -67,10 +62,10 @@ public ResponseEntity<String> criarComida(@RequestBody @Valid FoodDTO food){
             return ResponseEntity.ok(comida);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Carro co o ID: " + id + "Não existe nos nossos registro");
+                    .body("Comida com o ID: " + id + "Não existe nos nossos registro");
         }
     }
-    // 4. ALTERAR
+    // 4. ALTERAR/ATUALIZAR
     @PutMapping("alterar/{id}")
     @Operation(summary = "Altera uma comida pelo Id", description = "Essa rota altera uma comida pelo seu Id")
     @ApiResponses(value = {
@@ -91,13 +86,18 @@ public ResponseEntity<String> criarComida(@RequestBody @Valid FoodDTO food){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comida com o Id " + id + " Não existe!");
         }
     }
-
     // 5. Deletar
+    @DeleteMapping("deletar/{id}")
+    @Operation(summary = "deleta a comida por Id", description = "essa rota deleta o carro pelo seu Id ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Comida encontrada com sucesso!"),
+            @ApiResponse(responseCode = "404", description = "comida não encontrada")
+    })
 
     public ResponseEntity<String> deletarComidaPorId(@PathVariable long id){
 
         if(fooditemService.ListarComidaPorId(id) != null){
-          fooditemService.deletarComidaporId(id);
+          fooditemService.deletarComidaPorId(id);
           return ResponseEntity.ok("Comida com o Id " + id + " deletada com sucesso!");
         }else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("a comida com o id " + id + " nao foi encontrada!");
