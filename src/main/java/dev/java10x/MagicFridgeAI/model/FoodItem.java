@@ -3,8 +3,10 @@ package dev.java10x.MagicFridgeAI.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
@@ -26,13 +28,25 @@ public class FoodItem {
     private String nome;
 
     @Column(name = "quantidade")
-    @NotBlank(message = "A quantidade é obrigatória")
+    @NotNull
     private Integer quantidade;
 
     @Column(name = "validade")
-    @NotBlank(message = "A validade é obrigatória")
+    @NotNull
     private LocalDateTime validade;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "categoria")
+    private Categoria categoria;
+
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 
     public Long getId() {
         return id;
