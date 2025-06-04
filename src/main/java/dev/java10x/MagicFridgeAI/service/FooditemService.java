@@ -18,7 +18,7 @@ public class FooditemService {
 
     public FooditemService(FoodItemRepository repository, FoodMapper foodMapper) {
         this.repository = repository;
-        this.foodMapper = foodMapper
+        this.foodMapper = foodMapper;
     }
 // 1. CRIAR NOVA COMIDA
 
